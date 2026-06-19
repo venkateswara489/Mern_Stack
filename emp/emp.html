@@ -24,6 +24,8 @@
                 <option>Marketing</option>
             </select>
 
+            <input type="email" id="empEmail" placeholder="Email">
+
             <input type="number" id="empSalary" placeholder="Salary">
 
             <button onclick="addEmployee()">
@@ -41,6 +43,12 @@
             >
         </div>
 
+        <div class="summary-section">
+            <button id="showSummaryBtn" onclick="showSummary()">Show Summary</button>
+            <button id="clearSummaryBtn" onclick="clearSummary()">Clear Summary</button>
+            <div id="summaryCard" class="summary-card" style="margin-top:10px;border:1px solid #ccc;padding:10px;display:none;"></div>
+        </div>
+
         <table>
 
             <thead>
@@ -49,6 +57,7 @@
                     <th>Name</th>
                     <th>Age</th>
                     <th>Department</th>
+                    <th>Email</th>
                     <th>Salary</th>
                     <th>Actions</th>
                 </tr>
