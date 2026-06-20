@@ -545,7 +545,8 @@ textarea:focus {
   background: var(--card-bg);
 }
 
-button[type="submit"] {
+button[type="submit"],
+.contact-btn {
   padding: 16px 32px;
   border: none;
   background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
@@ -559,9 +560,45 @@ button[type="submit"] {
   margin-top: 10px;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover,
+.contact-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+}
+
+.contact-panel {
+  width: 100%;
+  max-width: 500px;
+}
+
+.received-messages {
+  margin-top: 15px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+}
+
+.dark .received-messages {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.message-card {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .message-card {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.message-card:last-child {
+  border-bottom: none;
+}
+
+.message-card p {
+  margin: 6px 0;
 }
 
 /* ===========================

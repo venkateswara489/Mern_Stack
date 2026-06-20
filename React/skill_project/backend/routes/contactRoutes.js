@@ -5,9 +5,9 @@ const router =
 express.Router();
 
 const {
-  saveMessage
-}
-=
+  saveMessage,
+  getMessages
+} =
 require(
   "../controllers/contactController"
 );
@@ -15,6 +15,10 @@ require(
 router.post(
   "/",
   saveMessage
+);
+router.get(
+  "/",
+  getMessages
 );
 
 module.exports = router;

@@ -1,123 +1,63 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import CourseCard from "../components/CourseCard";
 import API from "../api/courseApi";
 
-import { toast } from "react-toastify";
+function Courses() {
+  const [courses, setCourses] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-function Contact() {
+  
 
-  const [formData, setFormData] =
-    useState({
-      name: "",
-      email: "",
-      message: ""
-    });
-
-  async function handleSubmit(e) {
-
-    e.preventDefault();
-
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.message
-    ) {
-
-      toast.error(
-        "All Fields Required"
-      );
-
-      return;
-    }
-
+  async function fetchCourses() {
     try {
-
-      await API.post(
-        "/contact",
-        formData
-      );
-
-      toast.success(
-        "Message Sent Successfully"
-      );
-
-      setFormData({
-        name: "",
-        email: "",
-        message: ""
-      });
-
+      const response = await API.get("/courses");
+      setCourses(response.data);
+    } catch (err) {
+      setError("Unable to Load Courses ");
+    } finally {
+      setLoading(false);
     }
-
-    catch (error) {
-
-      toast.error(
-        "Failed To Send Message"
-      );
-
-    }
-
   }
 
+  useEffect(() => {
+    async function fetchData() {
+      await fetchCourses();
+    }
+    fetchData();
+  }, []);
+
+  if (loading) return <h2>Loading Courses...</h2>;
+  if (error) return <h2>{error}</h2>;
+
   return (
-
     <div className="page-container">
+      <h1>All Courses</h1>
 
-      <h1>Contact Us</h1>
+      <input
+        className="search"
+        type="text"
+        placeholder="Search Course"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
-      <form onSubmit={handleSubmit}>
-
-        <input
-          type="text"
-          placeholder="Enter Name"
-          value={formData.name}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              name: e.target.value
-            })
-          }
-        />
-
-        <br /><br />
-
-        <input
-          type="email"
-          placeholder="Enter Email"
-          value={formData.email}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              email: e.target.value
-            })
-          }
-        />
-
-        <br /><br />
-
-        <textarea
-          rows="5"
-          placeholder="Enter Message"
-          value={formData.message}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              message: e.target.value
-            })
-          }
-        />
-
-        <br /><br />
-
-        <button type="submit">
-          Send Message
-        </button>
-
-      </form>
-
+      <div className="courses">
+        {courses
+          .filter((course) =>
+            course.title.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((course) => (
+            <CourseCard
+              key={course._id}
+              title={course.title}
+              students={course.students}
+            />
+          ))}
+      </div>
     </div>
-
   );
 }
 
-export default Contact;
+export default Courses;
